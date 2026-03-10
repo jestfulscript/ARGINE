@@ -1,68 +1,26 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../style.css" />
-  <title>Partenze</title>
-</head>
-<body>
-  <div class="page">
-    <section class="panel">
-      <div class="section-head">
-        <h2>Partenze Fleet Carrier</h2>
-        <p>Aggiornate da JSON.</p>
-      </div>
+<div class="page">
+  <section class="panel">
+    <div class="section-head">
+      <h2>Departure Board</h2>
+      <p>Fleet Carrier schedule feed</p>
+    </div>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Destinazione</th>
-              <th>Stato</th>
-              <th>Nota</th>
-            </tr>
-          </thead>
-          <tbody id="scheduleBody"></tbody>
-        </table>
-      </div>
-
-      <div id="scheduleEmpty" class="empty" style="display:none; margin-top:14px;">
-        Nessuna partenza disponibile.
-      </div>
-    </section>
-  </div>
-
-  <script>
-    async function loadSchedule() {
-      const body = document.getElementById("scheduleBody");
-      const empty = document.getElementById("scheduleEmpty");
-
-      try {
-        const response = await fetch("../data/departures.json");
-        const data = await response.json();
-
-        if (!Array.isArray(data) || data.length === 0) {
-          empty.style.display = "block";
-          return;
-        }
-
-        body.innerHTML = data.map(item => `
+    <div class="table-wrap">
+      <table>
+        <thead>
           <tr>
-            <td>${item.date || "-"}</td>
-            <td><strong>${item.destination || "-"}</strong></td>
-            <td><span class="badge">${item.status || "Scheduled"}</span></td>
-            <td>${item.note || "-"}</td>
+            <th>Date</th>
+            <th>Destination</th>
+            <th>Status</th>
+            <th>Note</th>
           </tr>
-        `).join("");
-      } catch (error) {
-        empty.style.display = "block";
-        empty.textContent = "Impossibile caricare il file departures.json";
-      }
-    }
+        </thead>
+        <tbody id="scheduleBody"></tbody>
+      </table>
+    </div>
 
-    loadSchedule();
-  </script>
-</body>
-</html>
+    <div id="scheduleEmpty" class="empty" style="display:none; margin-top:14px;">
+      No departures available.
+    </div>
+  </section>
+</div>
