@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../style.css" />
+  <title>Blog</title>
+</head>
+<body>
+  <div class="page">
+    <section class="panel">
+      <div class="section-head">
+        <h2>Blog</h2>
+        <p>Aggiornamenti brevi della stazione e delle rotte.</p>
+      </div>
+
+      <div id="postsList" style="display:grid; gap:18px;"></div>
+
+      <div id="postsEmpty" class="empty" style="display:none;">
+        Nessun articolo disponibile.
+      </div>
+    </section>
+  </div>
+
+  <script>
+    async function loadPosts() {
+      const list = document.getElementById("postsList");
+      const empty = document.getElementById("postsEmpty");
+
+      try {
+        const response = await fetch("../data/posts.json");
+        const posts = await response.json();
+
+        if (!Array.isArray(posts) || posts.length === 0) {
+          empty.style.display = "block";
+          return;
+        }
+
+        list.innerHTML = posts.map(post => `
+          <article class="post">
+            <img src="${post.image || 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80'}" alt="${post.title || 'post image'}">
+            <div>
+              <div class="meta">${post.date || "-"} · ${post.category || "News"}</div>
+              <h3>${post.title || "Untitled"}</h3>
+              <p>${post.excerpt || ""}</p>
+            </div>
+          </article>
+        `).join("");
+      } catch (error) {
+        empty.style.display = "block";
+        empty.textContent = "Impossibile caricare il file posts.json";
+      }
+    }
+
+    loadPosts();
+  </script>
+</body>
+</html>
