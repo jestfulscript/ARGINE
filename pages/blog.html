@@ -7,20 +7,20 @@
   <title>Blog</title>
 </head>
 <body>
-  <div class="page">
-    <section class="panel">
-      <div class="section-head">
-        <h2>Blog</h2>
-        <p>Aggiornamenti brevi della stazione e delle rotte.</p>
-      </div>
+<div class="page">
+  <section class="panel">
+    <div class="section-head">
+      <h2>Station Bulletins</h2>
+      <p>Operational notices and route updates</p>
+    </div>
 
-      <div id="postsList" style="display:grid; gap:18px;"></div>
+    <div id="postsList" style="display:grid; gap:18px;"></div>
 
-      <div id="postsEmpty" class="empty" style="display:none;">
-        Nessun articolo disponibile.
-      </div>
-    </section>
-  </div>
+    <div id="postsEmpty" class="empty" style="display:none;">
+      No bulletins available.
+    </div>
+  </section>
+</div>
 
   <script>
     async function loadPosts() {
@@ -55,4 +55,5 @@
     loadPosts();
   </script>
 </body>
+
 </html>
