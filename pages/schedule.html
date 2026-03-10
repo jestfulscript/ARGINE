@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../style.css" />
+  <title>Partenze</title>
+</head>
+<body>
 <div class="page">
   <section class="panel">
     <div class="section-head">
@@ -24,3 +33,36 @@
     </div>
   </section>
 </div>
+
+  <script>
+    async function loadSchedule() {
+      const body = document.getElementById("scheduleBody");
+      const empty = document.getElementById("scheduleEmpty");
+
+      try {
+        const response = await fetch("../data/departures.json");
+        const data = await response.json();
+
+        if (!Array.isArray(data) || data.length === 0) {
+          empty.style.display = "block";
+          return;
+        }
+
+        body.innerHTML = data.map(item => `
+          <tr>
+            <td>${item.date || "-"}</td>
+            <td><strong>${item.destination || "-"}</strong></td>
+            <td><span class="badge">${item.status || "Scheduled"}</span></td>
+            <td>${item.note || "-"}</td>
+          </tr>
+        `).join("");
+      } catch (error) {
+        empty.style.display = "block";
+        empty.textContent = "Impossibile caricare il file departures.json";
+      }
+    }
+
+    loadSchedule();
+  </script>
+</body>
+</html>
